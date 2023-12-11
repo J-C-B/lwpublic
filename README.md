@@ -1,2 +1,5 @@
-# lwpublic
-Publid for LW odds
+# lwpublic repo
+
+Public repo for sharing LW related odds.
+
+
