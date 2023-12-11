@@ -7,7 +7,7 @@ It can be run on a local machine with the Azure CLI installed, or in Azure Cloud
 ## What does it do?
 * This script will create a user, app and storage account, then upload a file to the storage account
 * It will then delete the user, app and storage account
-* It will then create a log file in the current directory with the name azureevilscriptnnnnnnn.log
+* It will then create a log file in the current directory with the name `azureevilscriptnnnnnnn.log`
 
 ### Clone the repo and make the file executable
 ```bash
@@ -31,9 +31,10 @@ yourtenant="fooooooooooo" # the bit before the .onmicrosoft.com
 
 While running the script you will be asked to login to Azure, the first user should be capable of carrying out the tasks in the script, create a user, app etc.
 
-Once logged in the script will carry out the functions and switch to its newly created "evil" user, perform some recon and then uplard a file to storage
+Once logged in the script will carry out the functions and switch to its newly created "evil" user, perform some recon and then upload an "evil" file to the "evil" storage.
 
 Run the script by executing
+
 ```bash
 ./baduser_azure_activity.sh
 ```
