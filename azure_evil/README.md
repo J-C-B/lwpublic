@@ -21,6 +21,6 @@ Once logged in the script will carry out the functions and switch to
 ./baduser_azure_activity.sh
 ```
 
-![Example Alert](/Azure%20Evil/images/Example_Alert.png)
+![Example Alert](/azure_evil/images/Example_Alert.png)
 
-![Example Polygraph](/Azure%20Evil/images/Example_polygraph.png)
+![Example Polygraph](/azure_evil/images/Example_polygraph.png)
