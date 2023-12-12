@@ -86,7 +86,7 @@ sleep 20
 
 # Create Storage Account
 echo  ${cyn}Create Storage Account $storage_account${end}
-az storage account create --name "$storage_account" --resource-group "$resource_group" --location "$location" --sku Standard_LRS
+az storage account create --name "$storage_account" --resource-group "$resource_group" --location "$region" --sku Standard_LRS
 
 # Create a User
 echo  ${cyn}Create user - Evil User - $user_principal_name@$yourtenant.onmicrosoft.com${end}
