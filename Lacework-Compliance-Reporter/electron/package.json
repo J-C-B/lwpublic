@@ -2,6 +2,11 @@
   "name": "lacework-compliance-reporter",
   "version": "2.0.18",
   "description": "Lacework Compliance Reporting Tool",
+  "author": "Lacework",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lwpublic/Lacework-Compliance-Reporter.git"
+  },
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -14,6 +19,7 @@
   "build": {
     "appId": "com.lacework.compliance-reporter",
     "productName": "Lacework Compliance Reporter",
+    "publish": null,
     "directories": {
       "output": "../dist"
     },
