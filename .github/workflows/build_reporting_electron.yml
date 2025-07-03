@@ -38,6 +38,7 @@ jobs:
           pip install -r requirements.txt
           
       - name: Setup virtual environment
+        shell: bash
         run: |
           python -m venv venv
           if [ "$RUNNER_OS" = "Windows" ]; then
