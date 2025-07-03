@@ -1,0 +1,55 @@
+{
+  "name": "lacework-compliance-reporter",
+  "version": "2.0.18",
+  "description": "Lacework Compliance Reporting Tool",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder",
+    "dist": "electron-builder --publish=never",
+    "dist:mac": "electron-builder --mac --publish=never",
+    "dist:win": "electron-builder --win --publish=never",
+    "dist:all": "electron-builder --mac --win --publish=never"
+  },
+  "build": {
+    "appId": "com.lacework.compliance-reporter",
+    "productName": "Lacework Compliance Reporter",
+    "directories": {
+      "output": "../dist"
+    },
+    "files": [
+      "**/*",
+      "!node_modules/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "../",
+        "to": ".",
+        "filter": [
+          "streamlit_app.py",
+          "lacework_compliance_reporter.py",
+          "requirements.txt",
+          "config.example.json",
+          "images/**/*",
+          "venv/**/*"
+        ]
+      }
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "../images/icon.png"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "../images/icon.png"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "../images/icon.png"
+    }
+  },
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.0.0"
+  }
+} 

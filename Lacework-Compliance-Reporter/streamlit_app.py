@@ -1096,8 +1096,8 @@ def main():
                 st.header("ℹ️ Information")
                 
                 # Version information
-                st.markdown("**Version:** 2.0.6")
-                st.markdown("**Last Updated:** 03/07/2025")
+                st.markdown("**Version:** 2.0.18")
+                st.markdown("**Last Updated:** 04/07/2025")
                 st.markdown("---")
                 st.markdown("**Community tool, not supported by Lacework**")
                 st.markdown("---")

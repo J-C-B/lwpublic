@@ -1,4 +1,4 @@
-# 🔒 Lacework Compliance Reporter v2.0.6
+# 🔒 Lacework Compliance Reporter v2.0.18
 
 ![Lacework Compliance Reporter](images/first-run.png)
 
@@ -32,6 +32,21 @@ A modern, web-based compliance reporting tool for Lacework that provides compreh
 - Python 3.7 or higher
 - Lacework API credentials (Key ID, Secret, Account, URL)
 - Internet connection to access Lacework API
+
+### Desktop Application (Recommended)
+For the best user experience, use the Electron desktop application:
+
+```bash
+# Install Node.js dependencies (one-time setup)
+cd electron
+npm install
+
+# Launch the desktop app
+python launch_electron.py
+```
+
+### Web Application
+For web-based access, run the Streamlit app directly:
 
 ### Installation
 
@@ -164,6 +179,14 @@ The main Streamlit web application providing:
 - File management and analysis capabilities
 - Resource group filtering and download options
 - Performance optimizations and caching
+
+#### `electron/` (Desktop Application)
+Electron wrapper providing:
+- Native desktop application experience
+- Professional loading screen and error handling
+- Cross-platform compatibility (Windows, macOS, Linux)
+- Automatic Streamlit server management
+- Standard desktop application menu
 
 #### `lacework_compliance_reporter.py`
 Core compliance reporting engine providing:
@@ -360,8 +383,8 @@ This project is provided as-is for community use. Please ensure compliance with 
 
 ---
 
-**Version**: 2.0.6  
-**Last Updated**: 03/07/2025  
+**Version**: 2.0.18  
+**Last Updated**: 04/07/2025  
 **Community tool, not supported by Lacework** 
 
 **Project was 100% created with Cursor** 

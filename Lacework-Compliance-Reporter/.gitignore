@@ -54,6 +54,17 @@ Thumbs.db
 compliance_report_*.json
 compliance_report_*.csv
 
+# Build artifacts
+*.dmg
+*.exe
+*.AppImage
+*.blockmap
+builder-*.yml
+builder-*.yaml
+mac-*/
+win-*/
+linux-*/
+
 # Logs
 *.log
 
