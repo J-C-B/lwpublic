@@ -1,0 +1,4 @@
+# Python 3.7+ required for dataclasses support
+requests>=2.25.0
+streamlit>=1.28.0 
+watchdog>=2.0.0 

@@ -1,0 +1,7 @@
+{
+  // Lacework API credentials example
+  "keyId": "YOUR_API_KEY_ID",
+  "secret": "YOUR_API_SECRET",
+  "account": "yourcompany.lacework.net",
+  "url": "https://yourcompany.lacework.net"
+} 
