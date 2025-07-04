@@ -58,5 +58,5 @@ jobs:
         with:
           github_token: ${{ secrets.github_token }}
           package_root: ./Lacework-Compliance-Reporter/electron
-          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
+          release: true
           args: --publish=never 
