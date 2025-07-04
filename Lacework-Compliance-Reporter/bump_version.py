@@ -6,6 +6,7 @@ Usage: python bump_version.py [major|minor|patch]
 
 import re
 import sys
+import subprocess
 from pathlib import Path
 
 def update_package_json(version):
@@ -76,6 +77,45 @@ def update_last_updated_date():
         app_file.write_text(content)
         print(f"✅ Updated streamlit_app.py last updated date to {current_date}")
 
+def create_git_tag(version):
+    """Create and push Git tag for the new version"""
+    try:
+        tag_name = f"v{version}"
+        
+        # Check if tag already exists
+        result = subprocess.run(['git', 'tag', '-l', tag_name], capture_output=True, text=True)
+        if tag_name in result.stdout:
+            print(f"⚠️  Tag {tag_name} already exists. Skipping tag creation.")
+            return False
+        
+        # Add all changes
+        subprocess.run(['git', 'add', '.'], check=True)
+        print(f"✅ Added all changes to Git")
+        
+        # Commit changes
+        commit_message = f"Bump version to {version}"
+        subprocess.run(['git', 'commit', '-m', commit_message], check=True)
+        print(f"✅ Committed version bump to {version}")
+        
+        # Create tag
+        subprocess.run(['git', 'tag', tag_name], check=True)
+        print(f"✅ Created Git tag {tag_name}")
+        
+        # Push changes and tag
+        subprocess.run(['git', 'push'], check=True)
+        subprocess.run(['git', 'push', 'origin', tag_name], check=True)
+        print(f"✅ Pushed changes and tag {tag_name} to GitHub")
+        
+        return True
+        
+    except subprocess.CalledProcessError as e:
+        print(f"❌ Git operation failed: {e}")
+        print("💡 Make sure you have Git configured and have push access to the repository")
+        return False
+    except FileNotFoundError:
+        print("❌ Git not found. Make sure Git is installed and in your PATH")
+        return False
+
 def parse_version(version_string):
     """Parse version string into components"""
     parts = version_string.split('.')
@@ -138,7 +178,18 @@ def main():
     update_last_updated_date()
     
     print(f"\n✅ Version bumped to {new_version}")
-    print("📦 Ready to build: npm run dist")
+    
+    # Create Git tag and trigger release
+    print("\n🚀 Creating Git tag and triggering GitHub Actions release...")
+    if create_git_tag(new_version):
+        print(f"\n🎉 Success! Release {new_version} has been triggered.")
+        print("📋 Check GitHub Actions to monitor the build and release process.")
+        print("🔗 The release will appear in the Releases section once complete.")
+    else:
+        print(f"\n⚠️  Version bumped to {new_version} but Git tag creation failed.")
+        print("💡 You can manually create the tag with:")
+        print(f"   git tag v{new_version}")
+        print(f"   git push origin v{new_version}")
 
 if __name__ == "__main__":
     main() 
