@@ -5,6 +5,9 @@ on:
       - 'v*.*.*'  # Trigger on version tags
   workflow_dispatch:  # Allow manual triggers
 
+permissions:
+  contents: write
+
 defaults:
   run:
     working-directory: ./Lacework-Compliance-Reporter
