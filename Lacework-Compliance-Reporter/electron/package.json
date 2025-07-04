@@ -1,6 +1,6 @@
 {
   "name": "lacework-compliance-reporter",
-  "version": "2.0.22",
+  "version": "2.0.23",
   "description": "Lacework Compliance Reporting Tool",
   "author": "Lacework",
   "repository": {
