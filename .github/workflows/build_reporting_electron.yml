@@ -209,6 +209,69 @@ jobs:
           && sudo apt update \
           && sudo apt install gh -y
           
+      - name: Generate Release Body
+        id: generate_body
+        run: |
+          # Generate dynamic release body based on available files
+          RELEASE_BODY="## Lacework Compliance Reporter ${{ github.ref_name }}
+          
+          ### What's New
+          - Electron desktop application
+          - Multi-platform installers"
+          
+          # Check what files are available and add to release body
+          if [ -d "./dist-windows" ] && [ "$(ls -A ./dist-windows)" ]; then
+            RELEASE_BODY="$RELEASE_BODY
+          - Windows installer (.exe)"
+          fi
+          
+          if [ -d "./dist-macos" ] && [ "$(ls -A ./dist-macos)" ]; then
+            RELEASE_BODY="$RELEASE_BODY
+          - macOS installer (.dmg)"
+          fi
+          
+          if [ -d "./dist-linux" ] && [ "$(ls -A ./dist-linux)" ]; then
+            RELEASE_BODY="$RELEASE_BODY
+          - Linux installer (.AppImage)"
+          fi
+          
+          RELEASE_BODY="$RELEASE_BODY
+          
+          ### Installation
+          Download the appropriate installer for your operating system:"
+          
+          if [ -d "./dist-windows" ] && [ "$(ls -A ./dist-windows)" ]; then
+            RELEASE_BODY="$RELEASE_BODY
+          - **Windows**: \`.exe\` installer"
+          fi
+          
+          if [ -d "./dist-macos" ] && [ "$(ls -A ./dist-macos)" ]; then
+            RELEASE_BODY="$RELEASE_BODY
+          - **macOS**: \`.dmg\` disk image"
+          fi
+          
+          if [ -d "./dist-linux" ] && [ "$(ls -A ./dist-linux)" ]; then
+            RELEASE_BODY="$RELEASE_BODY
+          - **Linux**: \`.AppImage\` file"
+          fi
+          
+          RELEASE_BODY="$RELEASE_BODY
+          
+          ### Changes
+          - Built with Electron for desktop distribution
+          - Includes all Python dependencies
+          - Streamlit web interface wrapped in desktop app
+          - Cross-platform support
+          
+          ### Build Information
+          - **Version**: ${{ github.ref_name }}
+          - **Build Date**: $(date -u +"%Y-%m-%d %H:%M UTC")
+          - **Commit**: ${{ github.sha }}"
+          
+          echo "body<<EOF" >> $GITHUB_OUTPUT
+          echo "$RELEASE_BODY" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+          
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -217,24 +280,7 @@ jobs:
         with:
           tag_name: ${{ github.ref_name }}
           release_name: Release ${{ github.ref_name }}
-          body: |
-            ## Lacework Compliance Reporter ${{ github.ref_name }}
-            
-            ### What's New
-            - Electron desktop application
-            - Multi-platform installers (Windows, macOS, Linux)
-            
-            ### Installation
-            Download the appropriate installer for your operating system:
-            - **Windows**: `.exe` installer
-            - **macOS**: `.dmg` disk image
-            - **Linux**: `.AppImage` file
-            
-            ### Changes
-            - Built with Electron for desktop distribution
-            - Includes all Python dependencies
-            - Streamlit web interface wrapped in desktop app
-            - Cross-platform support
+          body: ${{ steps.generate_body.outputs.body }}
           draft: false
           prerelease: false
           
