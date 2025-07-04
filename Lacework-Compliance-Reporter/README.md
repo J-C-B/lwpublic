@@ -1,4 +1,4 @@
-# 🔒 Lacework Compliance Reporter v2.0.24
+# 🔒 Lacework Compliance Reporter v2.0.25
 
 ![Lacework Compliance Reporter](images/first-run.png)
 
@@ -383,7 +383,7 @@ This project is provided as-is for community use. Please ensure compliance with 
 
 ---
 
-**Version**: 2.0.24  
+**Version**: 2.0.25  
 **Last Updated**: 04/07/2025  
 **Community tool, not supported by Lacework** 
 
