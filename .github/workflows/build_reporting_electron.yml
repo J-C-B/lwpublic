@@ -212,12 +212,46 @@ jobs:
       - name: Generate Release Body
         id: generate_body
         run: |
-          # Generate dynamic release body based on available files
-          RELEASE_BODY="## Lacework Compliance Reporter ${{ github.ref_name }}
+          # Generate dynamic release body based on available files and git changes
+          RELEASE_BODY="## Lacework Compliance Reporter ${{ github.ref_name }}"
           
-          ### What's New
-          - Electron desktop application
-          - Multi-platform installers"
+          # Try to read from CHANGELOG.md if it exists
+          if [ -f "Lacework-Compliance-Reporter/CHANGELOG.md" ]; then
+            echo "📝 Found CHANGELOG.md, reading release notes..."
+            # Extract the section for this version from CHANGELOG.md
+            CHANGELOG_CONTENT=$(awk "/^## \[${{ github.ref_name }}\]/,/^## \[/" Lacework-Compliance-Reporter/CHANGELOG.md | head -n -1)
+            if [ -n "$CHANGELOG_CONTENT" ]; then
+              RELEASE_BODY="$RELEASE_BODY
+              
+          $CHANGELOG_CONTENT"
+            fi
+          fi
+          
+          # If no changelog content, generate from git commits
+          if [ -z "$CHANGELOG_CONTENT" ]; then
+            echo "📝 No CHANGELOG.md found, generating from git commits..."
+            
+            # Get commits since last tag
+            PREVIOUS_TAG=$(git describe --tags --abbrev=0 HEAD~1 2>/dev/null || echo "")
+            if [ -n "$PREVIOUS_TAG" ]; then
+              COMMITS=$(git log --pretty=format:"- %s" $PREVIOUS_TAG..HEAD --grep="^feat\|^fix\|^docs\|^style\|^refactor\|^test\|^chore" --invert-grep)
+            else
+              # If no previous tag, get last 10 commits
+              COMMITS=$(git log --pretty=format:"- %s" -10 --grep="^feat\|^fix\|^docs\|^style\|^refactor\|^test\|^chore" --invert-grep)
+            fi
+            
+            if [ -n "$COMMITS" ]; then
+              RELEASE_BODY="$RELEASE_BODY
+              
+          ### What's Changed
+          $COMMITS"
+            fi
+          fi
+          
+          # Add platform-specific information
+          RELEASE_BODY="$RELEASE_BODY
+          
+          ### Available Platforms"
           
           # Check what files are available and add to release body
           if [ -d "./dist-windows" ] && [ "$(ls -A ./dist-windows)" ]; then
@@ -256,12 +290,6 @@ jobs:
           fi
           
           RELEASE_BODY="$RELEASE_BODY
-          
-          ### Changes
-          - Built with Electron for desktop distribution
-          - Includes all Python dependencies
-          - Streamlit web interface wrapped in desktop app
-          - Cross-platform support
           
           ### Build Information
           - **Version**: ${{ github.ref_name }}
