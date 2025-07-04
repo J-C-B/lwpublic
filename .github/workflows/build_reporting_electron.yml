@@ -209,6 +209,11 @@ jobs:
           && sudo apt update \
           && sudo apt install gh -y
           
+      - name: Checkout repository for git access
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history for git log
+          
       - name: Generate Release Body
         id: generate_body
         run: |
@@ -221,30 +226,45 @@ jobs:
             # Extract the section for this version from CHANGELOG.md
             CHANGELOG_CONTENT=$(awk "/^## \[${{ github.ref_name }}\]/,/^## \[/" Lacework-Compliance-Reporter/CHANGELOG.md | head -n -1)
             if [ -n "$CHANGELOG_CONTENT" ]; then
+              echo "📝 Found changelog content for ${{ github.ref_name }}"
               RELEASE_BODY="$RELEASE_BODY
               
           $CHANGELOG_CONTENT"
+            else
+              echo "📝 No changelog content found for ${{ github.ref_name }}, will use git commits"
             fi
+          else
+            echo "📝 No CHANGELOG.md found, will use git commits"
           fi
           
           # If no changelog content, generate from git commits
           if [ -z "$CHANGELOG_CONTENT" ]; then
-            echo "📝 No CHANGELOG.md found, generating from git commits..."
+            echo "📝 Generating from git commits..."
             
             # Get commits since last tag
             PREVIOUS_TAG=$(git describe --tags --abbrev=0 HEAD~1 2>/dev/null || echo "")
             if [ -n "$PREVIOUS_TAG" ]; then
+              echo "📝 Getting commits since $PREVIOUS_TAG"
               COMMITS=$(git log --pretty=format:"- %s" $PREVIOUS_TAG..HEAD --grep="^feat\|^fix\|^docs\|^style\|^refactor\|^test\|^chore" --invert-grep)
             else
+              echo "📝 No previous tag found, getting last 10 commits"
               # If no previous tag, get last 10 commits
               COMMITS=$(git log --pretty=format:"- %s" -10 --grep="^feat\|^fix\|^docs\|^style\|^refactor\|^test\|^chore" --invert-grep)
             fi
             
             if [ -n "$COMMITS" ]; then
+              echo "📝 Found commits: $COMMITS"
               RELEASE_BODY="$RELEASE_BODY
               
           ### What's Changed
           $COMMITS"
+            else
+              echo "📝 No commits found, using default content"
+              RELEASE_BODY="$RELEASE_BODY
+              
+          ### What's Changed
+          - Version bump to ${{ github.ref_name }}
+          - Multi-platform build improvements"
             fi
           fi
           

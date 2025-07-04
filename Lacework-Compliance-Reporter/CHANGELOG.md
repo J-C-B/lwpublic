@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.0.26] - 2025-07-04
+
+### Added
+- Truly dynamic release notes generation
+- CHANGELOG.md integration for structured release notes
+- Git commit fallback for automatic changelog generation
+- Enhanced debugging and logging for release process
+
+### Changed
+- Release workflow now reads from CHANGELOG.md first
+- Improved error handling and fallback mechanisms
+- Better git repository access in release job
+
+### Fixed
+- Git repository access issues in release job
+- CHANGELOG.md path resolution problems
+- Release body generation failures
+
 ## [v2.0.25] - 2025-07-04
 
 ### Added
