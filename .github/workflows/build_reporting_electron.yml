@@ -181,6 +181,11 @@ jobs:
         working-directory: ./
     
     steps:
+      - name: Checkout repository for git access
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history for git log
+          
       - name: Download Windows build artifacts
         uses: actions/download-artifact@v4
         with:
@@ -208,11 +213,6 @@ jobs:
           && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
           && sudo apt update \
           && sudo apt install gh -y
-          
-      - name: Checkout repository for git access
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # Fetch all history for git log
           
       - name: Generate Release Body
         id: generate_body
