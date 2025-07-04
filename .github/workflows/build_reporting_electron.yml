@@ -12,10 +12,11 @@ defaults:
 jobs:
   release:
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
     strategy:
       matrix:
-        #os: [macos-latest, ubuntu-latest, windows-latest]
         os: [windows-latest]
+    
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v4
@@ -42,7 +43,7 @@ jobs:
         run: |
           python -m venv venv
           if [ "$RUNNER_OS" = "Windows" ]; then
-            venv\Scripts\activate
+            venv/Scripts/activate
           else
             source venv/bin/activate
           fi
