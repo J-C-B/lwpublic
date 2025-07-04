@@ -1,4 +1,5 @@
 # Lacework Public Repository
+# 🚨 This is a community repository with no support or warranty 🚨 
 
 A collection of Lacework-related tools, scripts, and resources for security testing, compliance reporting, and educational purposes.
 
@@ -128,7 +129,7 @@ chmod +x baduser_azure_activity.sh
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the Apache License, Version 2.0 - see the [LICENSE](LICENSE) file for details.
 
 ---
 
