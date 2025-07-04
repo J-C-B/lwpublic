@@ -43,15 +43,18 @@
     ],
     "win": {
       "target": "nsis",
-      "icon": "../images/icon.png"
+      "icon": "../images/icon.png",
+      "artifactName": "Lacework Compliance Reporter Setup ${version}.exe"
     },
     "mac": {
       "target": "dmg",
-      "icon": "../images/icon.png"
+      "icon": "../images/icon.png",
+      "artifactName": "Lacework Compliance Reporter ${version}.dmg"
     },
     "linux": {
       "target": "AppImage",
-      "icon": "../images/icon.png"
+      "icon": "../images/icon.png",
+      "artifactName": "Lacework Compliance Reporter ${version}.AppImage"
     }
   },
   "devDependencies": {
